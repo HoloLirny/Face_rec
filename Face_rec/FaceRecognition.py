@@ -5,12 +5,11 @@ from PIL import Image
 import numpy as np
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
-known_dir = os.path.join(base_dir, "image_posetrain")
+known_dir = os.path.join(base_dir, "images_Face")
 
 known_face_encodings = []
 known_face_names = []
 
-# โหลดใบหน้าที่รู้จัก
 for filename in os.listdir(known_dir):
     if filename.lower().endswith((".jpg", ".png")):
         path = os.path.join(known_dir, filename)
@@ -29,7 +28,6 @@ for filename in os.listdir(known_dir):
         except Exception as e:
             print(f"Error loading {filename}: {e}")
 
-# เปิดกล้อง
 video_capture = cv2.VideoCapture(0)
 if not video_capture.isOpened():
     print("Error: Could not open webcam.")
@@ -45,7 +43,6 @@ while True:
 
     small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
 
-    # ตรวจสอบขนาดช่องสี
     if small_frame.ndim != 3 or small_frame.shape[2] != 3:
         print("Camera frame is not 3-channel color image.")
         continue
